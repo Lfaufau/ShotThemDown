@@ -17,10 +17,10 @@ var Player = function(name, color, position, direction) {
     sphere = new THREE.SphereGeometry(6, 8, 8);
     THREE.GeometryUtils.merge(sphere, bumperMesh);
 
-    canon = new THREE.CubeGeometry(3, 3, 15);
+    canon = new THREE.CubeGeometry(15, 3, 15);
     THREE.GeometryUtils.merge(canon, sphere);
 
-    this.graphic = new THREE.Mesh(sphere, this.material);
+    this.graphic = new THREE.Mesh(canon, this.material);
     this.graphic.position.z = 6;
     this.graphic.rotateOnAxis(new THREE.Vector3(0,0,1), this.direction);
 };
@@ -57,7 +57,7 @@ Player.prototype.displayInfo = function () {
 
 Player.prototype.turnRight = function (angle) {
     this.direction -= angle;
-    this.graphic.rotateOnAxis(new THREE.Vector3(0,0,1), angle);
+    this.graphic.rotateOnAxis(new THREE.Vector3(0,0,1), -angle);
 };
 
 Player.prototype.turnLeft = function (angle) {

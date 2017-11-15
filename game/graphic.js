@@ -27,6 +27,13 @@ function init()
     noGround = [];
     ground = new Ground(0xffffff, WIDTH, HEIGHT, 10, player_position);
 
+    for (i = 0; i < 10; ++i)
+    {
+
+      ennemy = new Ennemy(WIDTH, HEIGHT);
+      scene.add(ennemy.graphic);
+    }
+
     player1 = new Player("player1", 0xffff00, player_position, 0);
     scene.add(player1.graphic);
 
