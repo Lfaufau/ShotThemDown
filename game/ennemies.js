@@ -1,42 +1,48 @@
-var Ennemy = function(width, height) {
-
+var Enemy = function() {
+    this.name = "enemy";
+    this.moveDown = true;
     this.color = colors[Math.floor(Math.random()*colors.length)];
-    this.position = new THREE.Vector2(Math.floor(Math.random()*width),
-      Math.floor(Math.random()*height));
+    this.life = 1;
+    this.position = new THREE.Vector2(100,100);
 
 //    this.bullets = new Array();
     this.direction = Math.PI / 2;
-    this.speed = 0;
+    this.speed = 3;
 
     this.material = new THREE.MeshLambertMaterial({
         color: this.color,
         });
 
-    ennemyMesh = new THREE.Mesh(new THREE.CylinderGeometry(0, 10, 10, 12, 12, false), this.materialBumper);
-    ennemyMesh.rotation.x = Math.PI / 2 ;
+    enemyMesh = new THREE.Mesh(new THREE.CylinderGeometry(0, 10, 10, 12, 12, false), this.materialBumper);
+    enemyMesh.rotation.x = Math.PI / 2 ;
 
     sphere = new THREE.SphereGeometry(6, 8, 8);
-    THREE.GeometryUtils.merge(sphere, ennemyMesh);
+    THREE.GeometryUtils.merge(sphere, enemyMesh);
 
-
-    this.graphic = new THREE.Mesh(sphere, this.ennemyMesh);
+    this.graphic = new THREE.Mesh(sphere, this.enemyMesh);
     this.graphic.position.z = 6;
     //this.graphic.rotateOnAxis(new THREE.Vector3(0,0,1), this.direction);
+    this.graphic.position.x = this.position.x;
+    this.graphic.position.y = this.position.y;
+
 };
 
-Ennemy.prototype.accelerate = function (distance) {
-    var max = 2;
+Enemy.prototype.move = function () {
+  if (this.graphic.position.y + HEIGHT / 2 > HEIGHT)
+    this.moveDown = false;
 
-    this.speed += distance / 4;
-    if (this.speed >= max) {
-        this.speed = max;
-    }
-};
+    if (this.graphic.position.y + HEIGHT / 2 < 0)
+      this.moveDown = true;
 
-Ennemy.prototype.move = function () {
-    var moveTo = new THREE.Vector3(
-        this.speed * Math.cos(this.direction) + this.graphic.position.x,
-        this.speed * Math.sin(this.direction) + this.graphic.position.y,
+this.speed = 3;
+
+  move = 1;
+  if (!this.moveDown)
+    move = -1;
+
+  var moveTo = new THREE.Vector3(
+        this.graphic.position.x,
+        this.speed * move + this.graphic.position.y,
         this.graphic.position.z
     );
 
@@ -47,4 +53,5 @@ Ennemy.prototype.move = function () {
     else if (this.speed < 0) {
         this.speed = this.speed + 0.04
     }
+
 };

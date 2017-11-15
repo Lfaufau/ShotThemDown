@@ -27,17 +27,13 @@ function init()
     noGround = [];
     ground = new Ground(0xffffff, WIDTH, HEIGHT, 10, player_position);
 
-    for (i = 0; i < 10; ++i)
-    {
-
-      ennemy = new Ennemy(WIDTH, HEIGHT);
-      scene.add(ennemy.graphic);
-    }
+    enemy = new Enemy();
+    scene.add(enemy.graphic);
 
     player1 = new Player("player1", 0xffff00, player_position, 0);
     scene.add(player1.graphic);
 
-    light1 = new Light("sun", 0xffffff, "0,0,50");
+    light1 = new Light("sun", 0xffffff, "200,200,100");
     scene.add(light1);
 }
 
@@ -83,7 +79,8 @@ function Ground(color, size_x, size_y, nb_tile, player_position)
 
 function Light(name, color, position)
 {
-    pointLight = new THREE.PointLight(color, 100, 350);
+    pointLight = new THREE.SpotLight(color);
+    pointLight.castShadow = false;
 
     pointLight.position.x = position.split(',')[0];
     pointLight.position.y = position.split(',')[1];
